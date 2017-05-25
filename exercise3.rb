@@ -14,21 +14,19 @@ class System
 
   end
 
-  def add
-    new_body = System.new
+  def add(new_body)
     @@bodies << new_body
   end
 
   def total_mass  ######CHECK ON THIS ######### :)
-    total_mass = 0
+    mass_tot = 0
+
     @@bodies.each do |body|
-      total_mass += body
+      mass_tot += body.mass
     end
-    total_mass
+    mass_tot
   end
-
 end
-
 
 class Body
 
@@ -40,6 +38,12 @@ class Body
   end
 
 end
+
+body1 = Body.new("Comet", 39932)
+solar_system = System.new
+solar_system.add(body1)
+
+
 
 # Have a day, which is the number of hours it takes for the planet to rotate all the way around once.
 # Have a year, which is the number of days it takes for the planet to orbit the sun once.
@@ -105,6 +109,7 @@ class Moon < Body
   end
 
 end
+
 
 jupiter = Planet.new("jupiter", 3443932, 10, 100)
 europa = Moon.new('europa', 400, 1, jupiter)
