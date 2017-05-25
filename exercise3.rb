@@ -10,37 +10,104 @@ class System
 
   attr_reader :bodies
 
-  def initialize(name, mass)
-    if body
-      @name = name
-      @mass = mass
-    end
+  def initialize
+
   end
 
-  def add(body)
-    @@bodies >> body
+  def add
+    new_body = System.new
+    @@bodies << new_body
   end
 
-  def total_mass
+  def total_mass  ######CHECK ON THIS ######### :)
     total_mass = 0
     @@bodies.each do |body|
       total_mass += body
-    total_mass
     end
+    total_mass
   end
-
-  def body(name, mass)
-
 
 end
 
 
+class Body
 
-# We'll also need a class to represent the various celestial bodies. We'll call it Body. Each of them will
-# need a name and a mass. Let's make these read-only; we'll assign them when we create the body.
-#
-# There are several types of bodies we're concerned about in our solar system: planets, stars
-# (like our sun), and moons. We'll ignore asteroids and smaller planetoids (sorry Pluto).
-#
-# Each of our body types needs a class: Planet, Star, and Moon. All of these bodies have some similarities:
-# they all have a name and a mass. So, let's also make them inherit from Body. They do have some unique qualities though.
+  attr_reader :name, :mass
+
+  def initialize(name, mass)
+    @name = name
+    @mass = mass
+  end
+
+end
+
+# Have a day, which is the number of hours it takes for the planet to rotate all the way around once.
+# Have a year, which is the number of days it takes for the planet to orbit the sun once.
+# Whether you want to express this in Earth days or the planet's days is up to you.
+class Planet < Body
+
+  attr_accessor :day_planet, :year_planet
+
+  def initialize(name, mass, day_planet, year_planet)
+    @day_planet = day_planet
+    @year_planet = year_planet
+    super(name, mass)
+  end
+
+  def day
+    "There are #{day_planet} hours in a day on the planet #{name}"
+  end
+
+  def year
+    "There are #{year_planet} days in a year on the planet #{name}"
+  end
+
+end
+
+earth = Planet.new("Earth", 543534543, 24, 365)
+puts earth.day
+
+
+class Star < Body
+
+  attr_accessor :type
+
+  def initialize(name, mass, type)
+    @type = type
+    super(name, mass)
+  end
+
+  def print_type
+    "#{name} is a #{type} star"
+  end
+end
+
+sun = Star.new("Sun", 34634634, "g-star")
+puts sun.print_type
+
+
+class Moon < Body
+
+  attr_accessor :month_moon, :planet
+
+  def initialize(name, mass, month_moon, planet)
+    @month_moon = month_moon
+    @planet = planet
+    super(name, mass)
+  end
+
+  def month
+    "There are #{month_moon} days in a month on the moon #{name}"
+  end
+
+  def moon_output
+    "#{name} is orbitting #{@planet.name}"
+  end
+
+end
+
+jupiter = Planet.new("jupiter", 3443932, 10, 100)
+europa = Moon.new('europa', 400, 1, jupiter)
+
+puts europa.month
+puts europa.moon_output
